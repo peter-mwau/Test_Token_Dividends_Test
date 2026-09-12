@@ -1,45 +1,39 @@
 # Smart Contract Test
 
-A Hardhat project containing an ERC-20-style token with minting, burning, transfers, and dividend distribution.
+A Hardhat project containing a mintable token with ERC-20 transfers, ETH-backed minting and burning, and proportional dividend payments.
 
 ## Prerequisites
 
 - Node.js 20 or newer
 - npm
 
-Check your Node.js version:
-
-```bash
-node --version
-```
+Hardhat is included as a development dependency.
 
 ## Setup
 
-Install the project dependencies from the repository root:
+Clone the repository, enter the project directory, and install dependencies:
 
 ```bash
+git clone <repository-url>
+cd <project-directory>
 npm install
 ```
 
 ## Compile
 
-Compile the Solidity contracts with Solidity 0.7.0:
-
 ```bash
 npm run compile
 ```
 
-Compiled artifacts are written to `artifacts/`.
-
 ## Run Tests
 
-Run the complete test suite:
+Run the full Hardhat test suite:
 
 ```bash
-npm test
+npm run test
 ```
 
-To include detailed Hardhat stack traces:
+Run with detailed stack traces:
 
 ```bash
 npm run test:stack
@@ -53,25 +47,23 @@ Start a local Hardhat JSON-RPC node in one terminal:
 npx hardhat node
 ```
 
-In a second terminal, deploy the token contract to the local `test` network:
+In another terminal, deploy the token contract:
 
 ```bash
 npm run deploy
 ```
 
-The deployment script prints the address of the deployed `Token` contract.
+The deployment script prints the deployed contract address.
 
-## Lint Solidity
+## Lint and Clean
 
-If Solhint is available in your environment, run:
+Run Solidity linting:
 
 ```bash
 npm run lint
 ```
 
-## Clean Generated Files
-
-Remove generated build output, artifacts, and the Solidity cache:
+Remove generated artifacts and cache files:
 
 ```bash
 npm run clean
@@ -80,6 +72,6 @@ npm run clean
 ## Project Structure
 
 - `contracts/` - Solidity contracts and interfaces
-- `scripts/deploy.js` - Local deployment script
-- `test/` - Contract tests
-- `hardhat.config.cjs` - Hardhat and network configuration
+- `scripts/deploy.js` - Deployment script
+- `test/` - Hardhat tests
+- `hardhat.config.cjs` - Hardhat configuration

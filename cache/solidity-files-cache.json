@@ -37,8 +37,13 @@
       ]
     },
     "/home/pierre/Desktop/pierre/Interview Project Tests/Smart Contract Test-20260911T112250Z-1-001/Smart Contract Test/contracts/Token.sol": {
+<<<<<<< HEAD
+      "lastModificationDate": 1789209153496,
+      "contentHash": "2ad522ed5243686ee0a2101b6c09f4f9",
+=======
       "lastModificationDate": 1789203143640,
       "contentHash": "aff1aa1adaeb58780d92d76dec6559f3",
+>>>>>>> a9a184fd4629fc279189dae64d51a360c08648ff
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.7.0",

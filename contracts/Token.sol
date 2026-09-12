@@ -21,10 +21,10 @@ contract Token is IERC20, IMintableToken, IDividends {
 
   mapping (address => mapping (address => uint256)) private allowances;
   mapping (address => uint256) private dividends;
-  mapping(address => uint256) private withdrawnDividends;
-  mapping(address => bool) private isTokenHolder;
+  mapping (address => uint256) private withdrawnDividends;
+  mapping (address => bool) private isTokenHolder;
   address[] private tokenHolders;
-  mapping(address => uint256) private tokenHolderIndices;
+  mapping (address => uint256) private tokenHolderIndices;
 
   function _addTokenHolder(address holder) private {
     if (tokenHolderIndices[holder] == 0) {
@@ -57,7 +57,6 @@ contract Token is IERC20, IMintableToken, IDividends {
   }
 
   function transfer(address to, uint256 value) external override returns (bool) {
-    // revert();
     uint256 balance = balanceOf[msg.sender];
     require(balance >= value, "Insufficient balance");
     require(to != address(0), "Invalid recipient address");
@@ -104,24 +103,21 @@ contract Token is IERC20, IMintableToken, IDividends {
   // IMintableToken
 
   function mint() external payable override {
-    // revert();
     require(msg.value > 0, "No funds supplied!");
 
     balanceOf[msg.sender] = balanceOf[msg.sender].add(msg.value);
     totalSupply = totalSupply.add(msg.value);
-
     _addTokenHolder(msg.sender);
   }
 
   function burn(address payable dest) external override {
-    // revert();
     uint256 balance = balanceOf[msg.sender];
     require(balance > 0, "No tokens to burn!");
 
-    balanceOf[msg.sender] = balanceOf[msg.sender].sub(balance);
+    balanceOf[msg.sender] = 0;
     totalSupply = totalSupply.sub(balance);
     _removeTokenHolder(msg.sender);
-    
+
     (bool success, ) = dest.call{value: balance}("");
     require(success, "Transfer failed.");
   }
@@ -129,12 +125,10 @@ contract Token is IERC20, IMintableToken, IDividends {
   // IDividends
 
   function getNumTokenHolders() external view override returns (uint256) {
-    // revert();
     return tokenHolders.length;
   }
 
   function getTokenHolder(uint256 index) external view override returns (address) {
-    // revert();
     if (index == 0 || index > tokenHolders.length) {
       return address(0);
     }
@@ -142,8 +136,8 @@ contract Token is IERC20, IMintableToken, IDividends {
   }
 
   function recordDividend() external payable override {
-    // revert();
     require(msg.value > 0, "No funds supplied!");
+
     for (uint256 i = 0; i < tokenHolders.length; i++) {
       address holder = tokenHolders[i];
       uint256 dividendShare = msg.value.mul(balanceOf[holder]).div(totalSupply);
@@ -152,14 +146,11 @@ contract Token is IERC20, IMintableToken, IDividends {
   }
 
   function getWithdrawableDividend(address payee) external view override returns (uint256) {
-    // revert();
     require(payee != address(0), "Invalid payee address");
-
     return dividends[payee].sub(withdrawnDividends[payee]);
   }
 
   function withdrawDividend(address payable dest) external override {
-    // revert();
     require(dest != address(0), "Invalid destination address");
     uint256 withdrawableDividend = dividends[msg.sender].sub(withdrawnDividends[msg.sender]);
     require(withdrawableDividend > 0, "No dividends available for withdrawal");
